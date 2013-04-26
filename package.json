@@ -1,0 +1,30 @@
+{
+  "name": "cozy-realtime-adapter",
+  "version": "0.0.8",
+  "description": "A simple binder from cozy-data-system's events to backbone models",
+  "main": "lib/server.js",
+  "scripts": {
+    "test": "cake tests",
+    "prepublish": "cake build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aenario/cozy-socket-listener"
+  },
+  "author": {
+    "name": "Romain"
+  },
+  "license": "BSD",
+  "dependencies": {
+    "redis": "~0.8.3",
+    "socket.io": "~0.9.14"
+  },
+  "readme": "# Socket Listener\r\n\r\nHelper library for interaction with cozy-data-system data changes notifications\r\n\r\n##Server-Side\r\n- transform Redis events to Socket.io\r\n\r\n##Client-Side\r\n- transform socket.io events to Backbone manipulation\r\n\r\n# About Cozy\r\n\r\nCozy Notes is suited to be deployed on the Cozy platform. Cozy is the personal\r\nserver for everyone. It allows you to install your every day web applications\r\neasily on your server, a single place you control. This means you can manage\r\nefficiently your data while protecting your privacy without technical skills.\r\n\r\nMore informations and hosting services on:\r\nhttps://cozycloud.cc\r\n\r\n# Cozy on IRC\r\n\r\nFeel free to check out our IRC channel (#cozycloud on irc.freenode.org) if you have any technical issues/inquiries or simply to speak about Cozy cloud in general.\r\n",
+  "readmeFilename": "README.md",
+  "_id": "cozy-realtime-adapter@0.0.7",
+  "dist": {
+    "shasum": "cb16e6fb52e1dfb2b40f5aeb2bf324938ec56d9c"
+  },
+  "_from": "cozy-realtime-adapter@= 0.0.7",
+  "_resolved": "https://registry.npmjs.org/cozy-realtime-adapter/-/cozy-realtime-adapter-0.0.7.tgz"
+}
