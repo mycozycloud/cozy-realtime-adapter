@@ -7,6 +7,12 @@
 
 module.exports = (compound, patterns) ->
 
+    unless process.env.NODE_ENV
+        logging = console
+    else
+        logging = log: ->
+
+
     path = require 'path'
     fs = require 'fs'
     sio = require 'socket.io'
@@ -17,14 +23,13 @@ module.exports = (compound, patterns) ->
 
     redis = require 'redis'
     client = redis.createClient()
-    console.log ' socket.io initialized !'
+    logging.log 'Realtime-adapter : socket.io initialized !'
 
 
     # serve lib/client.js under the url cozy-realtime-adapter.js
     oldListeners = compound.server.listeners('request').splice(0)
     compound.server.removeAllListeners 'request'
     compound.server.on 'request', (req, res) ->
-        console.log req.url
         if req.url is '/cozy-realtime-adapter.js'
             filepath = path.resolve __dirname, '../lib/client.js'
             res.writeHead 200, 'Content-Type': 'text/javascript'
@@ -52,7 +57,7 @@ module.exports = (compound, patterns) ->
 
     # apply appropriate callbacks for each event
     client.on 'pmessage', (pattern, ch, msg) ->
-        console.log pattern, ch, msg
+        logging.log pattern, ch, msg
         cbs = callbacks[pattern]
         callback ch, msg for callback in cbs
 
