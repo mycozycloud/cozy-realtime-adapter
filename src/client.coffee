@@ -140,7 +140,7 @@ class CozySocketListener
 
             when 'delete'
                 if model = @singlemodels.get id
-                    model.trigger 'destroy'
+                    @onRemoteDelete model, @singlemodels
 
                 @collections.forEach (collection) =>
                     return unless model = collection.get id
