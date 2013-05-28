@@ -15,7 +15,7 @@ module.exports = (compound) ->
         # event = 'alarm.update' or 'alarm.create' or 'alarm.delete'
         # msg = id of the updated alarm
 
-    # notification and application events should be proxyed to client
+    # notification events should be proxyed to client
     realtime = RealtimeAdapter compound, ['notification.*']
     realtime.on 'alarm.*', customCb
 ```
@@ -57,10 +57,11 @@ For more complex usages, refer to the code of cozy applications
 
 # About Cozy
 
-Cozy Notes is suited to be deployed on the Cozy platform. Cozy is the personal
-server for everyone. It allows you to install your every day web applications
-easily on your server, a single place you control. This means you can manage
-efficiently your data while protecting your privacy without technical skills.
+Cozy Realtime Adapter is a tools to ease development of Cozy Applications.
+Cozy is the personal server for everyone. It allows you to install your every
+day web applications easily on your server, a single place you control. This
+means you can manage efficiently your data while protecting your privacy
+without technical skills.
 
 More informations and hosting services on:
 https://cozycloud.cc
