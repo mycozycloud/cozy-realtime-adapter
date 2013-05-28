@@ -92,7 +92,7 @@ class CozySocketListener
                           stackEvent.id is ignoreEvent.model.id
                     @stack.splice stackIndex, 1
                     removed = true
-                    break;
+                    break
                 else
                     stackIndex++
 
