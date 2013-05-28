@@ -1,15 +1,15 @@
 {
   "name": "cozy-realtime-adapter",
-  "version": "0.0.8",
+  "version": "0.10.0",
   "description": "A simple binder from cozy-data-system's events to backbone models",
-  "main": "lib/server.js",
+  "main": "src/server.coffee",
   "scripts": {
     "test": "cake tests",
     "prepublish": "cake build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aenario/cozy-socket-listener"
+    "url": "https://github.com/mycozycloud/cozy-realtime-adapter"
   },
   "author": {
     "name": "Romain"
@@ -26,5 +26,9 @@
     "shasum": "cb16e6fb52e1dfb2b40f5aeb2bf324938ec56d9c"
   },
   "_from": "cozy-realtime-adapter@= 0.0.7",
-  "_resolved": "https://registry.npmjs.org/cozy-realtime-adapter/-/cozy-realtime-adapter-0.0.7.tgz"
+  "_resolved": "https://registry.npmjs.org/cozy-realtime-adapter/-/cozy-realtime-adapter-0.0.7.tgz",
+  "devDependencies": {
+    "express": "~3.2.5",
+    "request-json": "~0.3.6"
+  }
 }
