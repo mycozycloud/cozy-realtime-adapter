@@ -1,6 +1,6 @@
 {
   "name": "cozy-realtime-adapter",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "A simple binder from cozy-data-system's events to backbone models",
   "main": "src/server.coffee",
   "scripts": {
