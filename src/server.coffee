@@ -21,8 +21,9 @@ module.exports = (compound, patterns) ->
     compound.io.set 'log level', 2
     compound.io.set 'transports', ['websocket']
 
-    redis = require 'redis'
-    client = redis.createClient()
+    axon = require 'axon'
+    socket = axon.socket 'sub-emitter'
+
     logging.log 'Realtime-adapter : socket.io initialized !'
 
 
@@ -56,7 +57,7 @@ module.exports = (compound, patterns) ->
         callbacks[pattern] = cbs
 
     # apply appropriate callbacks for each event
-    client.on 'pmessage', (pattern, ch, msg) ->
+    @socket.on pattern, (ch, msg) ->
         logging.log pattern, ch, msg
         cbs = callbacks[pattern]
         callback ch, msg for callback in cbs
