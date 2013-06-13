@@ -23,6 +23,7 @@ module.exports = (compound, patterns) ->
 
     axon = require 'axon'
     socket = axon.socket 'sub-emitter'
+    socket.connect 9105
 
     logging.log 'Realtime-adapter : socket.io initialized !'
 
@@ -40,27 +41,17 @@ module.exports = (compound, patterns) ->
                 listener.call compound.server, req, res
 
 
-    # the callbacks
-    callbacks = {}
-
     # the default callback simply proxy the event through socket.io
     defaultCallback = (ch, msg) ->
         compound.io.sockets.emit ch, msg
 
     # add a callback
     registerCallback = (pattern, callback) ->
-        cbs = callbacks[pattern]
-        if not cbs?
-            cbs = []
-            client.psubscribe pattern
-        cbs.push callback
-        callbacks[pattern] = cbs
-
-    # apply appropriate callbacks for each event
-    @socket.on pattern, (ch, msg) ->
-        logging.log pattern, ch, msg
-        cbs = callbacks[pattern]
-        callback ch, msg for callback in cbs
+        socket.on pattern, (event, id) ->
+            if id
+                event = pattern.replace '*', event #axon is too smart
+                callback event, id
+            else callback pattern, event
 
 
     # register default patterns
