@@ -2,7 +2,7 @@
 
 Helper library for interaction with cozy-data-system data changes notifications
 
-##Server-Side : Redis -> Socket.io
+##Server-Side : Axon -> Socket.io
 
 Usage :
 
