@@ -1,4 +1,4 @@
-# Socket Listener
+# Realtime adapter
 
 Helper library for interaction with cozy-data-system data changes notifications
 
