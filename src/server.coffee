@@ -5,7 +5,7 @@
 # return an object with method
 # on(pattern, callback(event, id)) to register custom callbacks
 
-module.exports = (compound, patterns) ->
+module.exports = (compound, patterns, options) ->
 
     unless process.env.NODE_ENV
         logging = console
@@ -16,7 +16,7 @@ module.exports = (compound, patterns) ->
     path = require 'path'
     fs = require 'fs'
     sio = require 'socket.io'
-    compound.io = sio.listen compound.server
+    compound.io = sio.listen compound.server, options
 
     compound.io.set 'log level', 2
     compound.io.set 'transports', ['websocket']
