@@ -9,6 +9,9 @@ path = require 'path'
 fs = require 'fs'
 sio = require 'socket.io'
 axon = require 'axon'
+log = require('printit')
+    prefix: 'realtime-adapter'
+    date: false
 
 module.exports = (server, patterns, options) ->
 
@@ -21,7 +24,7 @@ module.exports = (server, patterns, options) ->
     socket = axon.socket 'sub-emitter'
     socket.connect 9105
 
-    logging.log 'Realtime-Adapter: socket.io initialized'
+    log.info 'socket.io initialized'
 
 
     # default callback simply proxies the event to all clients through socketio
@@ -30,6 +33,7 @@ module.exports = (server, patterns, options) ->
 
     # add a callback
     registerCallback = (pattern, callback) ->
+        log.debug "registered callback for pattern #{pattern}"
         socket.on pattern, (event, id) ->
             if id
                 event = pattern.replace '*', event # axon is too smart
