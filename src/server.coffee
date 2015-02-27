@@ -9,44 +9,37 @@ path = require 'path'
 fs = require 'fs'
 sio = require 'socket.io'
 axon = require 'axon'
+log = require('printit')
+    prefix: 'realtime-adapter'
+    date: false
 
+module.exports = (server, patterns, options) ->
 
-module.exports = (app, patterns, options) ->
+    # Bind socket.io on HTTP server
+    options ?= {}
+    options.serveClient = true
+    server.io = sio server, options
 
-    unless process.env.NODE_ENV
-        logging = console
-    else
-        logging = log: ->
-
-    app.io = sio.listen app.server, options
-    app.io.set 'log level', 2
-    app.io.set 'transports', ['websocket']
-
+    # start axon's socket
     socket = axon.socket 'sub-emitter'
     socket.connect 9105
 
-    logging.log 'Realtime-adapter : socket.io initialized !'
-
-    # serve lib/client.js under the url cozy-realtime-adapter.js
-    oldListeners = app.server.listeners('request').splice(0)
-    app.server.removeAllListeners 'request'
-    app.get '/cozy-realtime-adapter.js', (req, res) ->
-        filepath = path.resolve __dirname, '../lib/client.js'
-        res.writeHead 200, 'Content-Type': 'text/javascript'
-        fs.createReadStream(filepath).pipe res
+    log.info 'socket.io initialized'
 
 
-    # the default callback simply proxy the event through socket.io
-    defaultCallback = (change, msg) ->
-        app.io.sockets.emit change, msg
+    # default callback simply proxies the event to all clients through socketio
+    defaultCallback = (change, msg) -> server.io.emit change, msg
+
 
     # add a callback
     registerCallback = (pattern, callback) ->
+        log.debug "registered callback for pattern #{pattern}"
         socket.on pattern, (event, id) ->
             if id
                 event = pattern.replace '*', event # axon is too smart
                 callback event, id
-            else callback pattern, event
+            else
+                callback pattern, event
 
 
     # register default patterns
@@ -54,5 +47,4 @@ module.exports = (app, patterns, options) ->
     for pattern in patterns
         registerCallback pattern, defaultCallback
 
-    return
-        on: registerCallback
+    return on: registerCallback
