@@ -28,6 +28,10 @@ class CozySocketListener
         pathToSocketIO = "/#{window.location.pathname.substring(1)}socket.io"
         socket = io.connect url, path: pathToSocketIO
 
+        # prevent reconnection attempt if there was a connection error
+        socket.on 'connect_error', ->
+            socket.io.reconnection false
+
         for event in @events
             socket.on event, @callbackFactory(event)
 
