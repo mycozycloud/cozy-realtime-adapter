@@ -26,14 +26,14 @@ class CozySocketListener
     connect: ->
         url = window.location.origin
         pathToSocketIO = "/#{window.location.pathname.substring(1)}socket.io"
-        socket = io.connect url, path: pathToSocketIO
-
-        # prevent reconnection attempt if there was a connection error
-        socket.on 'connect_error', ->
-            socket.io.reconnection false
+        @socket = io url,
+            path: pathToSocketIO
+            reconnectionDelayMax: 60000
+            reconectionDelay: 2000
+            reconnectionAttempts: 3
 
         for event in @events
-            socket.on event, @callbackFactory(event)
+            @socket.on event, @callbackFactory(event)
 
     watch: (collection) ->
         #shortcut for app with a single collection
